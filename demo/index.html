@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>require模块测试</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" src="../src/require.js"></script>
+    <script type="text/javascript">
+
+        //方法1：同步加载脚本并在全局运行
+        require.include("js/jquery.min.js");
+
+        //虽然同步加载了，如果要操作元素，要等页面加载完成后！
+        $(function () {
+            $("div").append("1.head里同步加载脚本。<br/>");
+        });
+    </script>
+</head>
+<body>
+<div>启动。。。<br/></div>
+
+<script type="text/javascript">
+    //方法2：异步加载然后顺序执行
+    require.include([
+        "js/jquery.min.js",
+        "js/dev.js"
+    ], function () {
+        $("div").append("2.异步加载多个脚本，但同步顺序执行。<br/>");
+    });
+
+    //方法3：同步加载脚本并返回对象。建议把脚本都放在body。
+    var dev = require("js/dev.js");
+    $("div").append("3.body里同步加载脚本，返回对象：" + dev +"<br/>");   
+</script>
+</body>
+</html>
