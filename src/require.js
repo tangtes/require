@@ -1,7 +1,7 @@
 /**
  * 模块加载器 V1.1
  * Mooke
- * 2016-2-19
+ * 2016-2-21
  */
 (function (window) {
     //输出日志（字符串或对象）
@@ -43,9 +43,9 @@
         xhr.send();
     }
 
-    //在全局执行代码。支持chrome、IE8+
+    //在全局执行代码。支持chrome、IE8+。不用window.eval时，加载artDialog库会报错。
     require.evalCode = function (code) {
-        with (window) { return eval(code); }    //(window.execScript || window.eval)(code);    
+        with (window) { return (window.execScript || window.eval)(code); }
     };
 
     //导入指定路径的脚本（路径字符串或数组，回调方法[默认同步，有回调将使用异步]）
@@ -71,7 +71,6 @@
                                 for (var j = 0; j < path.length; j++) {
                                     require.evalCode(codeList[path[j]]);
                                 }
-                                codeList = null;
                                 callFnt();  //执行异步回调
                             }
                         }
