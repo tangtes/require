@@ -15,7 +15,7 @@
             if (data === null) {
                 return log("error:require_get. " + path);
             } else {
-                obj = require.evalCode("(function(){var module={exports:{}};" + data + ";return module.exports;})();");
+                obj = require.evalCode("(function(){var module={exports:{}},exports={};" + data + ";return module.exports;})();");
                 require.cache[path] = obj;  //缓存对象
             }
         });
